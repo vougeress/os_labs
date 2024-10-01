@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+
+#define VECTOR_SIZE 120
+
+int u[VECTOR_SIZE], v[VECTOR_SIZE];
+int n;
+double partial_results[10];
+pthread_mutex_t mutex; //used for synchronizing access to shared resources among multiple threads
+
+void *dot_product(void *arg){
+    int thread_id = *(int *)arg;
+    int start = (VECTOR_SIZE / n) * thread_id;
+    int end = (thread_id == n - 1) ? VECTOR_SIZE : (VECTOR_SIZE / n) * (thread_id + 1);
+    double partial_sum = 0.0;
+
+    for (int i = start; i < end; i++) {
+        partial_sum += u[i] * v[i];
+    }
+
+    FILE *file = fopen("temp.txt", "a");
+    if (file == NULL) {
+        perror("Failed to open temp.txt");
+        exit(1);
+    }
+
+    pthread_mutex_lock(&mutex);
+    fprintf(file, "%lf\n", partial_sum);
+    pthread_mutex_unlock(&mutex);
+    fclose(file);
+    return NULL;
+}
+
+int main() {
+    srand(time(NULL));
+
+    // Fill vectors with random values
+    for (int i = 0; i < VECTOR_SIZE; i++) {
+        u[i] = rand() % 100;
+        v[i] = rand() % 100;
+    }
+
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+
+    pthread_mutex_init(&mutex, NULL);
+    
+    pthread_t threads[n];
+    int thread_ids[n];
+    
+    FILE *file = fopen("temp.txt", "w");
+    if (file == NULL) {
+        perror("Failed to open temp.txt");
+        exit(1);
+    }
+    fclose(file);
+    
+    for (int i = 0; i < n; i++) {
+        thread_ids[i] = i;
+        pthread_create(&threads[i], NULL, dot_product, (void *)&thread_ids[i]);
+    }
+    
+    for (int i = 0; i < n; i++) {
+        pthread_join(threads[i], NULL);
+    }
+    
+    double total_sum = 0.0;
+    file = fopen("temp.txt", "r");
+    if (file == NULL) {
+        perror("Failed to open temp.txt");
+        exit(1);
+    }
+
+    double partial_result;
+    while (fscanf(file, "%lf", &partial_result) == 1) {
+        total_sum += partial_result;
+    }
+    fclose(file);
+    
+    printf("Dot Product: %lf\n", total_sum);
+    
+    pthread_mutex_destroy(&mutex);
+    return 0;
+}
+
