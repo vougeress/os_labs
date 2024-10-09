@@ -1,0 +1,2 @@
+ensure reliable communication between a publisher and multiple subscribers, 
+emphasizing the importance of using separate pipes.
