@@ -1,0 +1,2 @@
+increasing the number of threads leads to better performance due to effective workload distribution, after a certain point, 
+the overhead of managing the threads begins to negate the performance gains
