@@ -1,0 +1,22 @@
+
+
+
+kate@MacBook-Pro-Kate untitled9 % file ex1.c
+
+ex1.c: c program text, ASCII text
+kate@MacBook-Pro-Kate untitled9 % gcc ex1.c -o ex1
+
+kate@MacBook-Pro-Kate untitled9 % file ex1
+
+ex1: Mach-O 64-bit executable arm64
+kate@MacBook-Pro-Kate untitled9 % file ex1.c      
+
+ex1.c: c program text, Unicode text, UTF-8 text
+kate@MacBook-Pro-Kate untitled9 % gcc ex1.c -o ex1
+
+kate@MacBook-Pro-Kate untitled9 % file ex1  
+
+ex1: Mach-O 64-bit executable arm64
+
+
+ASCII text changed to Unicode text, UTF-8 text
