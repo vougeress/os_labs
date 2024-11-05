@@ -1,0 +1,6 @@
+kate@MacBook-Pro-Kate untitled9 % stat ex1
+16777232 58609720 -rwxr-xr-x 1 kate staff 0 33424 "Nov  5 19:12:10 2024" "Nov  5 19:11:54 2024" "Nov  5 19:11:54 2024" "Nov  5 19:11:54 2024" 4096 72 0 ex1
+
+kate@MacBook-Pro-Kate untitled9 % cp ex1 ex2
+kate@MacBook-Pro-Kate untitled9 % stat ex2
+16777232 58610945 -rwxr-xr-x 1 kate staff 0 33424 "Nov  5 19:17:39 2024" "Nov  5 19:17:38 2024" "Nov  5 19:17:38 2024" "Nov  5 19:17:38 2024" 4096 72 0 ex2
